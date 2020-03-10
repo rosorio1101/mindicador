@@ -10,4 +10,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Android build
           command: ./gradlew build
+  lint:
+    executor: android/android
+    steps:
+      - run:
+          name: Android Lint
+          command: ./gradlew lint
