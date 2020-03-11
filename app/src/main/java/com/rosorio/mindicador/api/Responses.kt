@@ -1,29 +1,23 @@
 package com.rosorio.mindicador.api
 
+import com.rosorio.mindicador.model.Indicator
 import java.util.Date
 
-data class Indicator(
-    val codigo: String?,
-    val nombre: String?,
-    val unidadMedida: String?,
-    val fecha: Date?,
-    val valor: Double?
-)
 
 data class MindicadorResponse(
-    val version: String?,
-    val autor: String?,
-    val fecha: Date?,
-    val uf: Indicator?,
-    val ivp: Indicator?,
-    val dolar: Indicator?,
-    val dolarIntercambio: Indicator?,
-    val euro: Indicator?,
-    val ipc: Indicator?,
-    val utm: Indicator?,
-    val imacec: Indicator?,
-    val tpm: Indicator?,
-    val libraCobre: Indicator?,
-    val tasaDesempleo: Indicator?,
-    val bitcoin: Indicator?
+    val version: String? = null,
+    val autor: String? = null,
+    val fecha: Date? = null,
+    val uf: Indicator? = null,
+    val ivp: Indicator? = null,
+    val dolar: Indicator? = null,
+    val dolarIntercambio: Indicator? = null,
+    val euro: Indicator? = null,
+    val ipc: Indicator? = null,
+    val utm: Indicator? = null,
+    val imacec: Indicator? = null,
+    val tpm: Indicator? = null,
+    val libraCobre: Indicator? = null,
+    val tasaDesempleo: Indicator? = null,
+    val bitcoin: Indicator? = null
 )
