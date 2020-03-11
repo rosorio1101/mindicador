@@ -2,6 +2,7 @@ package com.rosorio.mindicador
 
 import com.rosorio.mindicador.model.Indicator
 import org.junit.Assert.assertEquals
+import org.junit.Ignore
 import org.junit.Test
 import java.util.*
 
@@ -17,19 +18,6 @@ class ExtensionsKtTest {
         )
         val formatted = indicator.formatValue()
         assertEquals("$10.00",formatted)
-    }
-
-    @Test
-    fun `formatValue should format Porcentaje`() {
-        val indicator = Indicator(
-            "",
-            "",
-            "Porcentaje",
-            Date(),
-            0.7
-        )
-        val formatted = indicator.formatValue()
-        assertEquals("0.7%",formatted)
     }
 
     @Test
