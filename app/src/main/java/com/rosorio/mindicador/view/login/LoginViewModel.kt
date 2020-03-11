@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rosorio.mindicador.view.commons.ScreenState
-import com.rosorio.mindicador.datasources.LoginDataSource
 
 class LoginViewModel(val loginInteractor: LoginInteractor): ViewModel(),
     LoginInteractor.OnLoginFinishListener {
@@ -14,7 +13,7 @@ class LoginViewModel(val loginInteractor: LoginInteractor): ViewModel(),
         get() = _state
 
     fun verifyActiveSession() {
-        val activeUser = loginInteractor.hasActiveSession()
+        val activeUser = loginInteractor.activeSession()
         if(!activeUser.isNullOrEmpty()) {
             _state.value = ScreenState.Render(LoginState.Success(activeUser))
         }

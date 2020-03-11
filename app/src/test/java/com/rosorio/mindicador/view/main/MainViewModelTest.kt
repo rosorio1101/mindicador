@@ -71,6 +71,19 @@ class MainViewModelTest {
         })
     }
 
+    @Test
+    fun `should sign out`() {
+        val mockedObserver = createStateObserver()
+
+        mainViewModel.state.observeForever(mockedObserver)
+        mainViewModel.signOut()
+
+        verify(mainInteractor).logout()
+        verify(mockedObserver).onChanged(argThat {
+            it is ScreenState.Render<MainState> && it.renderState == MainState.SignOut
+        })
+    }
+
 
     private fun createStateObserver(): Observer<ScreenState<MainState>> = Mockito.spy(Observer { })
 }

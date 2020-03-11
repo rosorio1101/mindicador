@@ -1,6 +1,7 @@
 package com.rosorio.mindicador.view.login
 
 import com.rosorio.mindicador.datasources.LoginDataSource
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.InjectMocks
@@ -57,6 +58,15 @@ class LoginInteractorTest {
     }
 
     @Test
+    fun `should login failure when username null`() {
+        val username = null
+        val password = "password"
+        val mockListener = mock(LoginInteractor.OnLoginFinishListener::class.java)
+        loginInteractor.login(username, password, mockListener)
+        verify(mockListener).onCredentialsError()
+    }
+
+    @Test
     fun `should login failure when password empty`() {
         val username = "username"
         val password = ""
@@ -65,6 +75,25 @@ class LoginInteractorTest {
         verify(mockListener).onCredentialsError()
     }
 
+
+    @Test
+    fun `should login failure when password null`() {
+        val username = "username"
+        val password = null
+        val mockListener = mock(LoginInteractor.OnLoginFinishListener::class.java)
+        loginInteractor.login(username, password, mockListener)
+        verify(mockListener).onCredentialsError()
+    }
+
+
+    @Test
+    fun `should do nothing when listener is null`() {
+        val username = "username"
+        val password = "password"
+        val mockListener = mock(LoginInteractor.OnLoginFinishListener::class.java)
+        loginInteractor.login(username, password,null)
+        verify(mockListener, never()).onCredentialsError()
+    }
     @Test
     fun `should create user and login success`() {
         val username = "username"
@@ -80,4 +109,13 @@ class LoginInteractorTest {
         verify(loginDataSource).signUp(username, password)
         verify(mockListener).onSuccess("username")
     }
+
+    @Test
+    fun `should active session`() {
+        `when`(loginDataSource.activeSession()).thenReturn("username")
+        val username = loginInteractor.activeSession()
+        assertEquals("username", username)
+        verify(loginDataSource).activeSession()
+    }
+
 }
