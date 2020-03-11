@@ -17,8 +17,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "SECRET_KEY", "\"\""
-        buildConfigField "String", "SECRET_IV", "\"\""
+        buildConfigField "String", "SECRET_KEY", "\"/C1s/Pf0PVhe8pq1etlE++TdYOqYatxrFDzkWc8GQtQ=\""
+        buildConfigField "String", "SECRET_IV", "\"ww==\""
         buildConfigField "String", "API_HOST", "\"https://www.mindicador.cl/\""
     }
 
