@@ -1,10 +1,7 @@
 package com.rosorio.mindicador.di
 
 import com.rosorio.mindicador.App
-import com.rosorio.mindicador.di.modules.AppModule
-import com.rosorio.mindicador.di.modules.LoginModule
-import com.rosorio.mindicador.di.modules.NetworkModule
-import com.rosorio.mindicador.di.modules.PreferencesModule
+import com.rosorio.mindicador.di.modules.*
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
@@ -17,7 +14,8 @@ import javax.inject.Singleton
         AppModule::class,
         PreferencesModule::class,
         NetworkModule::class,
-        LoginModule::class
+        LoginModule::class,
+        MainModule::class
     ]
 )
 interface AppComponent: AndroidInjector<App> {

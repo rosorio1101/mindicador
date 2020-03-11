@@ -13,13 +13,11 @@ import javax.inject.Singleton
 
 @Module
 class NetworkModule {
-
     @Singleton
     @Provides
     fun providesGson(): Gson = GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create()
-
 
     @Singleton
     @Provides
@@ -27,7 +25,6 @@ class NetworkModule {
         .baseUrl(BuildConfig.API_HOST)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
-
 
     @Provides
     fun provideMindicadorApi(retrofit: Retrofit): MindicadorApi = retrofit.create(MindicadorApi::class.java)

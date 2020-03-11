@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.rosorio.mindicador.R
 import com.rosorio.mindicador.view.commons.ScreenState
 import com.rosorio.mindicador.view.commons.viewmodels.ViewModelFactory
+import com.rosorio.mindicador.view.main.MainActivity
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
@@ -19,6 +20,12 @@ class LoginActivity : AppCompatActivity() {
     lateinit var factory: ViewModelFactory<LoginViewModel>
 
     private lateinit var viewModel: LoginViewModel
+
+    private val username: String
+        get() = etUsername.text.toString()
+
+    private val password: String
+        get() = etPassword.text.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -48,6 +55,9 @@ class LoginActivity : AppCompatActivity() {
     private fun onSuccess() {
         errorMessage.text = "Inicio de sesión correcto"
         errorMessage.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_light))
+        startActivity(MainActivity.buildIntent(this, MainActivity.IntentData(
+            username
+        )))
     }
 
     private fun onError() {
@@ -66,8 +76,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun onLoginClicked(view: View) {
-        val username = etUsername.text.toString()
-        val password = etPassword.text.toString()
         viewModel.performLogin(username, password)
     }
 }

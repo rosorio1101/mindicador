@@ -57,4 +57,22 @@ class PreferencesLoginDataSourcesTest{
         val login = dataSources.login("username", password)
         assertNull(login)
     }
+
+    @Test
+    fun `should sign up successfully`() {
+        val mockEditor = mock(SharedPreferences.Editor::class.java)
+        `when`(preferences.edit()).thenReturn(mockEditor)
+        dataSources.signUp("username", password)
+        verify(mockEditor).putString("username", encodedPassword)
+
+    }
+
+    @Test
+    fun `should logout successfully`() {
+        val mockEditor = mock(SharedPreferences.Editor::class.java)
+        `when`(preferences.edit()).thenReturn(mockEditor)
+        dataSources.logout("username")
+        verify(mockEditor).remove("username")
+
+    }
 }
