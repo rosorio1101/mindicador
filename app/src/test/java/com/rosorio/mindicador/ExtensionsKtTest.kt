@@ -29,7 +29,7 @@ class ExtensionsKtTest {
             0.7
         )
         val formatted = indicator.formatValue()
-        assertEquals("0,7%",formatted)
+        assertEquals("0.7%",formatted)
     }
 
     @Test
