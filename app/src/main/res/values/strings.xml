@@ -3,4 +3,5 @@
     <string name="label_username">Usuario</string>
     <string name="label_password">Contraseña</string>
     <string name="label_login">Inicia sesión</string>
+    <string name="label_login_welcome">Bienvenido a Mindicador</string>
 </resources>

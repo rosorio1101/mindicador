@@ -18,3 +18,9 @@ jobs:
       - run:
           name: Android Lint
           command: ./gradlew lint
+  test:
+    executor: android/android
+      steps:
+          - run:
+            name: Android Test
+            command: ./gradlew jacocoTestReport

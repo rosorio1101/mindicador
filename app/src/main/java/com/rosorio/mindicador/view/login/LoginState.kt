@@ -1,4 +1,4 @@
-package com.rosorio.mindicador.login
+package com.rosorio.mindicador.view.login
 
 enum class LoginState {
     Success, WrongCredentials

@@ -1,19 +1,18 @@
 package com.rosorio.mindicador
 
 import com.rosorio.mindicador.di.DaggerAppComponent
+import com.rosorio.mindicador.security.SecurityManager
 import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
 import dagger.android.DaggerApplication
-import javax.inject.Inject
 
 class App : DaggerApplication() {
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<App>
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> = dispatchingAndroidInjector
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return DaggerAppComponent.factory().create(this)
+    }
 
     override fun onCreate() {
         super.onCreate()
-        DaggerAppComponent.create().inject(this)
+        SecurityManager.init(BuildConfig.SECRET_KEY, BuildConfig.SECRET_IV)
     }
 }
