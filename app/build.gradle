@@ -4,7 +4,16 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+
 apply plugin: 'jacoco'
+jacoco {
+    toolVersion = '0.8.5'
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+}
+
 
 android {
     compileSdkVersion 28
@@ -20,6 +29,10 @@ android {
         buildConfigField "String", "SECRET_KEY", "\"/C1s/Pf0PVhe8pq1etlE++TdYOqYatxrFDzkWc8GQtQ=\""
         buildConfigField "String", "SECRET_IV", "\"ww==\""
         buildConfigField "String", "API_HOST", "\"https://www.mindicador.cl/\""
+
+        javaCompileOptions.annotationProcessorOptions {
+            includeCompileClasspath = true
+        }
     }
 
     compileOptions {
@@ -106,16 +119,20 @@ def androidExclusion = [
 
 
 task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
+
     reports {
         xml.enabled = true
         html.enabled = true
     }
 
-    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: androidExclusion)
+    def kotlinClasses = fileTree(
+            dir: "$buildDir/tmp/kotlin-classes/debug",
+            excludes: androidExclusion
+    )
     def mainSrc = "${project.projectDir}/src/main/java"
 
     sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
+    classDirectories = files([kotlinClasses])
     executionData = fileTree(dir: "$buildDir", includes: [
             "jacoco/testDebugUnitTest.exec",
             "outputs/code-coverage/connected/*coverage.ec"
