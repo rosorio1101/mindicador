@@ -37,7 +37,7 @@ class LoginViewModelTest {
         val password = "password"
 
         doAnswer {
-            (it.arguments[2] as LoginInteractor.OnLoginFinishListener).onSuccess()
+            (it.arguments[2] as LoginInteractor.OnLoginFinishListener).onSuccess("user")
                 null
             }.`when`(loginInteractor).login(any(), any(), any())
 
@@ -51,7 +51,7 @@ class LoginViewModelTest {
         })
 
         verify(mockedObserver).onChanged(ArgumentMatchers.argThat {
-            it is ScreenState.Render<LoginState> && it.renderState == LoginState.Success
+            it is ScreenState.Render<LoginState> && it.renderState is LoginState.Success
         })
 
     }

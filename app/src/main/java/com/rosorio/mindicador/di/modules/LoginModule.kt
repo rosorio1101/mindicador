@@ -14,17 +14,15 @@ import javax.inject.Named
 import javax.inject.Provider
 
 @Module(
+    includes = [
+        DataSourceModule::class
+    ]
 )
 abstract class LoginModule {
     @ContributesAndroidInjector
     abstract fun contributeLogin(): LoginActivity
 
     companion object {
-        @JvmStatic
-        @Provides
-        fun provideLoginDataSource(preferences: SharedPreferences): LoginDataSource =
-            PreferencesLoginDataSources(preferences)
-
         @JvmStatic
         @Provides
         fun provideViewModel(interactor: LoginInteractor) = LoginViewModel(interactor)

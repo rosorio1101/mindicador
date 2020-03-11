@@ -31,7 +31,7 @@ class LoginInteractorTest {
 
         loginInteractor.login(username, password, mockListener)
 
-        verify(mockListener).onSuccess()
+        verify(mockListener).onSuccess("username")
     }
 
     @Test
@@ -78,6 +78,6 @@ class LoginInteractorTest {
         loginInteractor.login(username, password, mockListener)
 
         verify(loginDataSource).signUp(username, password)
-        verify(mockListener).onSuccess()
+        verify(mockListener).onSuccess("username")
     }
 }

@@ -13,13 +13,20 @@ class LoginViewModel(val loginInteractor: LoginInteractor): ViewModel(),
     val state: LiveData<ScreenState<LoginState>>
         get() = _state
 
+    fun verifyActiveSession() {
+        val activeUser = loginInteractor.hasActiveSession()
+        if(!activeUser.isNullOrEmpty()) {
+            _state.value = ScreenState.Render(LoginState.Success(activeUser))
+        }
+    }
+
     fun performLogin(username: String, password: String){
         _state.value = ScreenState.Loading
         loginInteractor.login(username, password, this)
     }
 
-    override fun onSuccess() {
-        _state.value = ScreenState.Render(LoginState.Success)
+    override fun onSuccess(username: String?) {
+        _state.value = ScreenState.Render(LoginState.Success(username!!))
     }
 
     override fun onCredentialsError() {

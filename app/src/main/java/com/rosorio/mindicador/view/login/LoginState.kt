@@ -1,5 +1,6 @@
 package com.rosorio.mindicador.view.login
 
-enum class LoginState {
-    Success, WrongCredentials
+sealed class LoginState {
+    class Success(val username: String): LoginState()
+    object WrongCredentials: LoginState()
 }

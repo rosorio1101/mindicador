@@ -2,12 +2,15 @@ package com.rosorio.mindicador.view.main
 
 import com.rosorio.mindicador.api.MindicadorApi
 import com.rosorio.mindicador.api.MindicadorResponse
+import com.rosorio.mindicador.datasources.LoginDataSource
+import com.rosorio.mindicador.datasources.PreferencesLoginDataSources
 import com.rosorio.mindicador.model.Indicator
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainInteractor(private val api: MindicadorApi) {
+class MainInteractor(private val api: MindicadorApi,
+                     private val preferences: LoginDataSource) {
     interface OnRetrieveDataListener {
         fun onSuccess(indicators: List<Indicator?>)
         fun onError(errorMessage: String)
@@ -42,5 +45,9 @@ class MainInteractor(private val api: MindicadorApi) {
                 }
             }
         })
+    }
+
+    fun logout() {
+        preferences.logout()
     }
 }

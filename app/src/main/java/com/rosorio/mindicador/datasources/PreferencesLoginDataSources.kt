@@ -3,6 +3,7 @@ package com.rosorio.mindicador.datasources
 import android.content.SharedPreferences
 import com.rosorio.mindicador.security.SecurityManager
 
+private const val ACTIVE_SESSION = "ACTIVE_SESSION"
 class PreferencesLoginDataSources(
     private val preferences: SharedPreferences
 ): LoginDataSource {
@@ -12,7 +13,10 @@ class PreferencesLoginDataSources(
                 it.isEmpty() -> null
                 else -> {
                     val decryptPassword = SecurityManager.decrypt(it)
-                    return password == decryptPassword
+                    return if(password == decryptPassword) {
+                        preferences.edit().putString(ACTIVE_SESSION, username).apply()
+                        true
+                    } else false
                 }
             }
         }
@@ -23,8 +27,10 @@ class PreferencesLoginDataSources(
         apply()
     }
 
-    override fun logout(username: String) = preferences.edit().run {
-        remove(username)
+    override fun logout() = preferences.edit().run {
+        remove(ACTIVE_SESSION)
         apply()
     }
+
+    override fun activeSession(): String? = preferences.getString(ACTIVE_SESSION, "")
 }

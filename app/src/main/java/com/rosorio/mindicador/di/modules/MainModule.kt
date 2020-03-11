@@ -1,6 +1,7 @@
 package com.rosorio.mindicador.di.modules
 
 import com.rosorio.mindicador.api.MindicadorApi
+import com.rosorio.mindicador.datasources.LoginDataSource
 import com.rosorio.mindicador.view.commons.viewmodels.ViewModelFactory
 import com.rosorio.mindicador.view.main.MainActivity
 import com.rosorio.mindicador.view.main.MainInteractor
@@ -10,7 +11,11 @@ import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import javax.inject.Provider
 
-@Module
+@Module(
+    includes = [
+        DataSourceModule::class
+    ]
+)
 abstract class MainModule {
     @ContributesAndroidInjector
     abstract fun contribureMainActivity(): MainActivity
@@ -22,7 +27,7 @@ abstract class MainModule {
 
         @JvmStatic
         @Provides
-        fun provideInteractor(api: MindicadorApi) = MainInteractor(api)
+        fun provideInteractor(api: MindicadorApi, datasource: LoginDataSource) = MainInteractor(api,datasource)
 
         @JvmStatic
         @Provides

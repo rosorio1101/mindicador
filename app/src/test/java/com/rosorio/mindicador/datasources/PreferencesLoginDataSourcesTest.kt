@@ -7,6 +7,7 @@ import junit.framework.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.*
@@ -39,9 +40,13 @@ class PreferencesLoginDataSourcesTest{
 
     @Test
     fun `should login successful`() {
+        val mockEditor = mock(SharedPreferences.Editor::class.java)
+        `when`(preferences.edit()).thenReturn(mockEditor)
+        `when`(mockEditor.putString(anyString(), anyString())).thenReturn(mockEditor)
         `when`(preferences.getString(anyString(), anyString())).thenReturn(encodedPassword)
         val login = dataSources.login("username", password)
         assertTrue(login!!)
+        verify(mockEditor).putString("ACTIVE_SESSION", "username")
     }
 
     @Test
@@ -71,8 +76,8 @@ class PreferencesLoginDataSourcesTest{
     fun `should logout successfully`() {
         val mockEditor = mock(SharedPreferences.Editor::class.java)
         `when`(preferences.edit()).thenReturn(mockEditor)
-        dataSources.logout("username")
-        verify(mockEditor).remove("username")
+        dataSources.logout()
+        verify(mockEditor).remove("ACTIVE_SESSION")
 
     }
 }

@@ -34,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
 
         viewModel.state.observe(::getLifecycle,::updateUI)
+        viewModel.verifyActiveSession()
         btnLogin.setOnClickListener(::onLoginClicked)
     }
 
@@ -47,12 +48,12 @@ class LoginActivity : AppCompatActivity() {
     private fun updateRenderState(render: LoginState) {
         hideLoading()
         when(render) {
-            LoginState.Success -> onSuccess()
+            is LoginState.Success -> onSuccess(render.username)
             LoginState.WrongCredentials -> onError()
         }
     }
 
-    private fun onSuccess() {
+    private fun onSuccess(username: String) {
         errorMessage.text = "Inicio de sesión correcto"
         errorMessage.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_light))
         startActivity(MainActivity.buildIntent(this, MainActivity.IntentData(

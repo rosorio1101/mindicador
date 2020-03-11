@@ -1,6 +1,7 @@
 package com.rosorio.mindicador.model
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -8,18 +9,14 @@ import java.util.*
 
 @Parcelize
 data class Indicator(
-    val codigo: String?,
-    val nombre: String?,
-    val unidadMedida: String?,
-    val fecha: Date?,
-    val valor: Double?
+    @SerializedName("codigo")
+    val code: String?,
+    @SerializedName("nombre")
+    val name: String?,
+    @SerializedName("unidad_medida")
+    val unitMeasurement: String?,
+    @SerializedName("fecha")
+    val date: Date?,
+    @SerializedName("valor")
+    val value: Double?
 ): Parcelable
-
-
-fun Indicator.formatValue() : String = when(unidadMedida) {
-    "Porcentaje" -> DecimalFormat("##.##%").format(valor?.div(100))
-    "Dólar" -> NumberFormat.getCurrencyInstance(Locale.US).format(valor)
-    else -> NumberFormat.getCurrencyInstance(Locale.US).apply {
-        currency = Currency.getInstance("CLP")
-    }.format(valor)
-}

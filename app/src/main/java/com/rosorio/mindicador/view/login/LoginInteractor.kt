@@ -6,7 +6,7 @@ class LoginInteractor(
     private val loginDataSource: LoginDataSource
 ) {
     interface OnLoginFinishListener {
-        fun onSuccess()
+        fun onSuccess(username: String?)
         fun onCredentialsError()
     }
 
@@ -15,7 +15,7 @@ class LoginInteractor(
             username.isNullOrEmpty() -> listener?.onCredentialsError()
             password.isNullOrEmpty() -> listener?.onCredentialsError()
             else -> when(loginDataSource.login(username, password)) {
-                true -> listener?.onSuccess()
+                true -> listener?.onSuccess(username)
                 false -> {
                     listener?.onCredentialsError()
                 }
@@ -26,4 +26,6 @@ class LoginInteractor(
             }
         }
     }
+
+    fun hasActiveSession(): String? = loginDataSource.activeSession()
 }

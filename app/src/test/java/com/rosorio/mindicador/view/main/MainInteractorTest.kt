@@ -2,6 +2,7 @@ package com.rosorio.mindicador.view.main
 
 import com.rosorio.mindicador.api.MindicadorApi
 import com.rosorio.mindicador.api.MindicadorResponse
+import com.rosorio.mindicador.datasources.LoginDataSource
 import com.rosorio.mindicador.model.Indicator
 import okhttp3.MediaType
 import okhttp3.ResponseBody
@@ -19,6 +20,9 @@ import java.util.*
 class MainInteractorTest {
     @Mock
     lateinit var api: MindicadorApi
+    @Mock
+    lateinit var dataSource: LoginDataSource
+
     @InjectMocks
     lateinit var interactor: MainInteractor
 
@@ -104,5 +108,11 @@ class MainInteractorTest {
         interactor.retrieveIndicators(mockListener)
 
         verify(mockListener).onError(anyString())
+    }
+
+    @Test
+    fun `should logout`() {
+        interactor.logout()
+        verify(dataSource).logout()
     }
 }

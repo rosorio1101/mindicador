@@ -24,4 +24,9 @@ class MainViewModel(private val interactor: MainInteractor): ViewModel(), MainIn
     override fun onError(errorMessage: String) {
         _state.value = ScreenState.Render(MainState.onError(errorMessage))
     }
+
+    fun signOut() {
+        interactor.logout()
+        _state.value = ScreenState.Render(MainState.SignOut)
+    }
 }
