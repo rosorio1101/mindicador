@@ -27,5 +27,5 @@ class LoginInteractor(
         }
     }
 
-    fun hasActiveSession(): String? = loginDataSource.activeSession()
+    fun activeSession(): String? = loginDataSource.activeSession()
 }

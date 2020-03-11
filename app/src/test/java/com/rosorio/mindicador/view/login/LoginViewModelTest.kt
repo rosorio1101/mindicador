@@ -81,5 +81,17 @@ class LoginViewModelTest {
         })
     }
 
+    @Test
+    fun `should verifyActiveSession`() {
+        val mockedObserver = createStateObserver()
+        `when`(loginInteractor.activeSession()).thenReturn("username")
+        loginViewModel.state.observeForever(mockedObserver)
+        loginViewModel.verifyActiveSession()
+
+        verify(mockedObserver).onChanged(ArgumentMatchers.argThat {
+            it is ScreenState.Render<LoginState> && it.renderState is LoginState.Success
+        })
+    }
+
     private fun createStateObserver(): Observer<ScreenState<LoginState>> = spy(Observer {  })
 }
